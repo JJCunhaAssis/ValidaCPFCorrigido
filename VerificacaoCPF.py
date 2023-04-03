@@ -1,3 +1,5 @@
+import threading
+
 def validar_cpf_2(cpf):
     corpo_cpf = cpf[:9]
     digito_cpf = cpf[-2:]
@@ -46,9 +48,17 @@ blocklist = [
     '99999999999'
 ]
 
+def timeout():
+    print("\n\nOperação encerrada por falta de resposta.\n\n")
+    exit()
+
 while True:
+    t = threading.Timer(10.0, timeout)
+    t.start()
 
     entrada = input('> Digite um CPF para validar ou X para sair: ')
+    t.cancel()
+
     entrada_sem_ponto = entrada.replace('.', '')
     entrada_formatada = entrada_sem_ponto.replace('-', '')
 
